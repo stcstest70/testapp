@@ -1,0 +1,33 @@
+.nav_container{
+    background-color: #2978ef;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+.nav_logo img{
+    width: 47px;
+    border-radius: 50%;
+}
+
+.nav_links span{
+    line-height: 43px;
+    background: white;
+    color: #f08209;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 3px 5px;
+    margin: 0 5px;
+}
+
+@media only screen and (max-width:600px){
+    .nav_container{
+        background-color: #2978ef;
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 12px;
+    }
+    .nav_logo img{
+        width: 37px;
+        border-radius: 50%;
+    }
+}

@@ -1,0 +1,33 @@
+.home_container{
+    width: 80%;
+    margin: auto;
+}
+.home_top{
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.home_top span{
+    font-size: 20px;
+    font-weight: 600;
+    color: #686868;
+}
+.home_top button{
+    font-size: 20px;
+    padding: 5px 12px;
+    border: 1px solid #2978ef;
+    border-radius: 3px;
+}
+.dropdown{
+    text-align: center;
+    margin: 5px 0;
+}
+.dropdown select{
+    margin: 8px 5px;
+}
+@media only screen and (max-width : 600px){
+    .home_container{
+        width: 90%;
+    }
+}

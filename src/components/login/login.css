@@ -1,0 +1,115 @@
+.login_container{
+    min-height: 80vh;
+}
+.login_form{
+    margin: auto;
+    width: 40%;
+    margin-top: 100px;
+    box-shadow: 0px 2px 7px #000000;
+}
+.login_header{
+    background: #2978ef;
+    color: white;
+    text-align: center;
+    line-height: 60px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.form_ele{
+    padding: 0 20px;
+    margin: 30px 0px;
+}
+.form_ele label{
+    font-size: 16px;
+    font-weight: bold;
+    color: #555050;
+}
+.form_ele input{
+    background: rgb(239 239 239);
+    padding: 8px;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    margin: 3px;
+    font-size: 17px;
+    width: 86%;
+}
+.form_ele i{
+    background: rgb(239 239 239);
+    padding: 6px;
+    font-size: 18px;
+    border-radius: 3px;
+    margin: 3px;
+}
+.form_btns{
+    text-align: center;
+    padding: 15px 0;
+}
+.form_btns button{
+    cursor: pointer;
+    border: none;
+    background: #1b6eeb;
+    line-height: 30px;
+    color: white;
+    font-size: 18px;
+    padding: 2px 12px;
+    border-radius: 3px;
+}
+.form_btns button:hover{
+    background: #0660e7;
+}
+.login_header h2{
+    padding: 13px 0;
+}
+@media only screen and (max-width:1000px){
+    .login_form{
+        margin: auto;
+        width: 50%;
+        margin-top: 100px;
+        box-shadow: 0px 2px 7px #000000;
+    }
+}
+@media only screen and (max-width:700px){
+    .login_form{
+        margin: auto;
+        width: 60%;
+        margin-top: 100px;
+        box-shadow: 0px 2px 7px #000000;
+    }
+}
+@media only screen and (max-width:500px){
+    .login_form{
+        margin: auto;
+        width: 80%;
+        margin-top: 100px;
+        box-shadow: 0px 2px 7px #000000;
+    }
+    .login_header{
+        line-height: 50px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+    .login_header h2{
+        font-size: 20px;
+    }
+    .form_ele input {
+        padding: 6px;
+        margin: 3px;
+        font-size: 14px;
+        width: 86%;
+    }
+    .form_btns button {
+        line-height: 30px;
+        color: white;
+        font-size: 16px;
+        padding: 0px 9px;
+    }
+}
+@media only screen and (max-width:350px){
+    .login_form{
+        margin: auto;
+        width: 90%;
+        margin-top: 100px;
+        box-shadow: 0px 2px 7px #000000;
+    }
+}
