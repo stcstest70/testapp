@@ -12,7 +12,7 @@ const Home = () => {
   const navigate = useNavigate();
   const CheckTokenValid = async () => {
     const token = sessionStorage.getItem('AdminToken');
-    const res = await fetch('/checkAdminTokenValid', {
+    const res = await fetch('https://testapp-sz38.onrender.com/checkAdminTokenValid', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
@@ -59,7 +59,7 @@ const Home = () => {
     else {
       if (password === cpassword) {
         try {
-          const res = await fetch('/addInstructor', {
+          const res = await fetch('https://testapp-sz38.onrender.com/addInstructor', {
             method: 'POST',
             headers: {
               "Content-Type": "application/json"
@@ -87,7 +87,7 @@ const Home = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await fetch('/getInstructors', {
+        const res = await fetch('https://testapp-sz38.onrender.com/getInstructors', {
           method: 'GET',
           headers: {
             "Accept": "application/json"
@@ -111,7 +111,7 @@ const Home = () => {
   const [data2, setData2] = useState();
   const getFormData = async () => {
     try {
-      const res = await fetch('/getCourses', {
+      const res = await fetch('https://testapp-sz38.onrender.com/getCourses', {
         method: 'GET',
         headers: {
           "Accept": "application/json"
@@ -125,7 +125,7 @@ const Home = () => {
   }
   const handleSubmit2 = async () => {
     try {
-      const res = await fetch('/assignLecture', {
+      const res = await fetch('https://testapp-sz38.onrender.com/assignLecture', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"

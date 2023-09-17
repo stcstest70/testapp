@@ -21,7 +21,7 @@ const Login = () => {
     }
     else {
       try {
-        const res = await fetch('/adminLogin', {
+        const res = await fetch('https://testapp-sz38.onrender.com/adminLogin', {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -55,7 +55,7 @@ const Login = () => {
     }
     else {
       try {
-        const res = await fetch('/instructorLogin', {
+        const res = await fetch('https://testapp-sz38.onrender.com/instructorLogin', {
           method: "POST",
           headers: {
             "Content-Type": "application/json"

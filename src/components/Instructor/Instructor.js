@@ -20,7 +20,7 @@ const Instructor = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await fetch('/getInstructors', {
+        const res = await fetch('https://testapp-sz38.onrender.com/getInstructors', {
           method: 'GET',
           headers: {
             "Accept": "application/json"
@@ -44,7 +44,7 @@ const Instructor = () => {
   const [data2, setData2] = useState();
   const getFormData = async () => {
     try {
-      const res = await fetch('/getCourses', {
+      const res = await fetch('https://testapp-sz38.onrender.com/getCourses', {
         method: 'GET',
         headers: {
           "Accept": "application/json"

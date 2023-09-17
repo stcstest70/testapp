@@ -11,7 +11,7 @@ const Courses = () => {
   const navigate = useNavigate();
   const CheckTokenValid = async () => {
     const token = sessionStorage.getItem('AdminToken');
-    const res = await fetch('/checkAdminTokenValid', {
+    const res = await fetch('https://testapp-sz38.onrender.com/checkAdminTokenValid', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
@@ -77,7 +77,7 @@ const Courses = () => {
     formDataToSend.append('image', file);
 
     try {
-      const response = await fetch('/upload', {
+      const response = await fetch('https://testapp-sz38.onrender.com/upload', {
         method: 'POST',
         body: formDataToSend,
       });
@@ -99,7 +99,7 @@ const Courses = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await fetch('/getCourses', {
+        const res = await fetch('https://testapp-sz38.onrender.com/getCourses', {
           method: 'GET',
           headers: {
             "Accept": "application/json"
@@ -128,7 +128,7 @@ const Courses = () => {
 
   const handleSubmit2 = async () => {
     try {
-      const res = await fetch('/addLecture', {
+      const res = await fetch('https://testapp-sz38.onrender.com/addLecture', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
