@@ -4,6 +4,8 @@ import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import './Courses.css';
 import { AdminContext } from '../../App.js';
+import { storage } from '../../Firebase.js';
+import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 
 const Courses = () => {
@@ -37,7 +39,6 @@ const Courses = () => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
 
-
   //modal
 
   const [modalState, setModalState] = useState("close");
@@ -63,31 +64,109 @@ const Courses = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  // const handleFileChange = (e) => {
+  //   setFile(e.target.files[0]);
+  // };
+  const [imgUploadMsg, setImgUploadMsg] = useState('');
+  const [image, setImage] = useState('');
+
+  // const handleImageUpload=()=>{
+  //   if(imgUpload){
+
+  //     const imageRef = ref(storage, `category/${imgUpload.name + Date.now().toString()}`);
+  //     uploadBytes(imageRef, imgUpload).then(()=>{
+  //       console.log('image uploaded');
+  //       setImgUploadMsg("Image Uploaded");
+  //       getDownloadURL(imageRef).then((url)=>setImage(url));
+  //     }).catch((err)=> console.log(err));
+  //   }
+  //   else{
+  //     setImgUploadMsg("Please select an image");
+  //   }
+  // }
+  const [imgUpload, setImgUpload] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
+  const handleImageUpload = () => {
+    if (imgUpload) {
+      const imageRef = ref(storage, `Courses/${imgUpload.name}`);
+      const uploadTask = uploadBytesResumable(imageRef, imgUpload);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload is ${progress}% complete`);
+          setUploadProgress(progress);
+        },
+        (error) => {
+          console.error('Error during upload:', error);
+        },
+        () => {
+          console.log('Image uploaded successfully');
+          setImgUploadMsg('Image Uploaded');
+          setUploadProgress(100);
+
+          // Get the download URL
+          getDownloadURL(imageRef)
+            .then((url) => {
+              setImage(url);
+            })
+            .catch((err) => console.error('Error getting download URL:', err));
+        }
+      );
+    } else {
+      setImgUploadMsg('Please select an image');
+    }
+  };
+
+  const handleFileInputChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setImgUpload(selectedFile);
+  };
+
+  const getData = async () => {
+    try {
+      const res = await fetch('https://testapp-sz38.onrender.com/getCourses', {
+        method: 'GET',
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
+      }
+
+      const data = await res.json();
+      setData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formDataToSend = new FormData();
-    formDataToSend.append('name', formData.name);
-    formDataToSend.append('level', formData.level);
-    formDataToSend.append('description', formData.description);
-    formDataToSend.append('image', file);
-
     try {
       const response = await fetch('https://testapp-sz38.onrender.com/upload', {
         method: 'POST',
-        body: formDataToSend,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name:formData.name,level: formData.level, description:formData.description, image:image
+        })
       });
 
       if (response.status === 200) {
         alert('Data and image uploaded successfully');
+        getData();
         setModalState("close")
       } else if (response.status === 400) {
         alert('Data already exist');
-        setModalState("close")
+        setModalState("close");
       } else {
         console.log('Some Error while uploading data');
       }
@@ -96,29 +175,13 @@ const Courses = () => {
     }
   };
 
+
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await fetch('https://testapp-sz38.onrender.com/getCourses', {
-          method: 'GET',
-          headers: {
-            "Accept": "application/json"
-          }
-        });
 
-        if (!res.ok) {
-          throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
-        }
-
-        const data = await res.json();
-        setData(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
     getData();
-  }, [setData, handleSubmit]);
+  }, []);
+
+
   const [cname, setCname] = useState('');
   const [lecture, setLecture] = useState('');
   async function handleEdit(name) {
@@ -139,6 +202,7 @@ const Courses = () => {
       });
       if (res.status === 201) {
         window.alert('Lecture added successfully');
+        getData();
         setModalState("close");
       } else {
         window.alert('Internal server error');
@@ -181,7 +245,8 @@ const Courses = () => {
             onChange={handleInputChange}
             placeholder='Description...'
           ></textarea><br />
-          <input type="file" name="image" onChange={handleFileChange} />
+          <input type="file" name="image" onChange={handleFileInputChange} />   
+          <div className='uploadProgress'><Button variant="primary" onClick={handleImageUpload}>Upload Image</Button> Upload Progress: {uploadProgress.toFixed(2)}%</div>
           <div className="btns">
             <Button variant="secondary" onClick={handleClose}>
               Close
@@ -214,18 +279,19 @@ const Courses = () => {
                   <td>{item.name.level}</td>
                   <td>{item.name.description}</td>
                   <td>
-                    {item.name.imageUrl}
+                  <a href={item.name.imageUrl} rel="noreferrer" target="_blank">image url</a>
+                    
                   </td>
                   <td>
-                  <ul>
-            {item.lectures
-              ?.filter((lecture) => Object.keys(lecture?.lecture || {}).length > 0)
-              .map((lecture, lectureIndex) => (
-                <li key={lectureIndex}>
-                  {lecture?.lecture?.lecture}
-                </li>
-              ))}
-          </ul>
+                    <ul>
+                      {item.lectures
+                        ?.filter((lecture) => Object.keys(lecture?.lecture || {}).length > 0)
+                        .map((lecture, lectureIndex) => (
+                          <li key={lectureIndex}>
+                            {lecture?.lecture?.lecture}
+                          </li>
+                        ))}
+                    </ul>
                   </td>
                   <td>
                     <Button onClick={() => handleEdit(item.name.name)}>Add Lecture</Button>
@@ -260,10 +326,10 @@ const Courses = () => {
                 </tr>
               ))}
             </tbody>) : (<tbody>
-                <tr>
-                  <td colSpan="6">Loading...</td>
-                </tr>
-              </tbody>)}
+              <tr>
+                <td colSpan="6">Loading...</td>
+              </tr>
+            </tbody>)}
 
 
           </table>

@@ -38,18 +38,10 @@ const Instructor = () => {
     };
     getData();
   }, []);
-
-  
-
-
-
-
-
-
   return (
     <div className='home_container'>
       <div className="home_top">
-        <span>Instructors </span> 
+        <span>Instructor Panel </span> 
       </div>
       
       <div className="home_bottom">
@@ -57,7 +49,7 @@ const Instructor = () => {
           <table className='content-table tableC'>
             <thead>
               <tr>
-                <th>Sr.No.</th>
+                
                 <th>Name</th>
                 <th>Course</th>
                 <th>Lecture</th>
@@ -68,7 +60,7 @@ const Instructor = () => {
             {data? (
               <tbody>
               <tr>
-                <td>1</td>
+                
                 <td>{data.name.name}</td>
                 <td>
                   {data.assign.map((assignment, assignmentIndex) => (

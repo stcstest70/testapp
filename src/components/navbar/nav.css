@@ -17,6 +17,7 @@
     cursor: pointer;
     padding: 3px 5px;
     margin: 0 5px;
+    border-radius: 4px;
 }
 
 @media only screen and (max-width:600px){
@@ -29,5 +30,8 @@
     .nav_logo img{
         width: 37px;
         border-radius: 50%;
+    }
+    .nav_links > span > span{
+        display: none;
     }
 }

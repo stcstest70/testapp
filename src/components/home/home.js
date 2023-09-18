@@ -51,6 +51,29 @@ const Home = () => {
 
 
 
+  
+
+  const getData = async () => {
+    try {
+      const res = await fetch('https://testapp-sz38.onrender.com/getInstructors', {
+        method: 'GET',
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
+      }
+
+      const data = await res.json();
+      setData(data);
+      
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   const handleSubmit = async () => {
 
     if (!name || !password || !cpassword) {
@@ -70,7 +93,8 @@ const Home = () => {
           });
           if (res.status === 200) {
             window.alert('Instructor Added Successfully');
-
+            getData();
+            setModalState("close");
           } else {
             window.alert('Internal server error');
           }
@@ -85,26 +109,6 @@ const Home = () => {
     }
   }
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await fetch('https://testapp-sz38.onrender.com/getInstructors', {
-          method: 'GET',
-          headers: {
-            "Accept": "application/json"
-          }
-        });
-
-        if (!res.ok) {
-          throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
-        }
-
-        const data = await res.json();
-        setData(data);
-        
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
     getData();
   }, []);
 
@@ -137,6 +141,7 @@ const Home = () => {
       });
       if (res.status === 200) {
         window.alert('Lecture Assigned to User Successfully');
+        getData();
         setModalState("close");
       }else if(res.status === 400){
         window.alert('Date already assigned for the Instructor, try another date');

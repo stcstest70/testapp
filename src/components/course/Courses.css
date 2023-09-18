@@ -13,3 +13,11 @@
 .tableC{
     width: 100%;
 }
+.uploadProgress{
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+.uploadProgress button{
+    font-size: 13px;
+    padding: 2px 4px;
+}
