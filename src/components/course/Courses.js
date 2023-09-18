@@ -6,7 +6,6 @@ import './Courses.css';
 import { AdminContext } from '../../App.js';
 import { storage } from '../../Firebase.js';
 import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import axios from 'axios';
 
 
 const Courses = () => {
@@ -150,13 +149,18 @@ const Courses = () => {
   useEffect(() => {
     const getInitialData = async () => {
       try {
-        const response = await axios.get('https://testapp-sz38.onrender.com/getCourses', {
+        const res = await fetch('https://testapp-sz38.onrender.com/getCourses', {
+          method: 'GET',
           headers: {
             "Accept": "application/json"
           }
         });
-    
-        const data = response.data;
+  
+        if (!res.ok) {
+          throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
+        }
+  
+        const data = await res.json();
         setData(data);
         setLoading(false);
       } catch (error) {
@@ -288,7 +292,7 @@ const Courses = () => {
                 <th>Add Lecture</th>
               </tr>
             </thead>
-            {loading ? (<tbody>
+            {data ? (<tbody>
               {data.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
