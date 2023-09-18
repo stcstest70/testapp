@@ -69,8 +69,8 @@ const Login = () => {
           window.alert('Instructor Login Successful');
           const data = await res.json();
           const { user } = data;
-          console.log(user);
-          sessionStorage.setItem('User', user);
+          console.log(user.name.name);
+          sessionStorage.setItem('User', user.name.name);
           navigate('/instructor');
         }else if(res.status === 400){
           window.alert('Invalid username or password');

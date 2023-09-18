@@ -100,7 +100,7 @@ const Home = () => {
 
         const data = await res.json();
         setData(data);
-        setLoading(false);
+        
       } catch (error) {
         console.error('Error:', error);
       }
@@ -119,6 +119,7 @@ const Home = () => {
       });
       const data = await res.json();
       setData2(data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }

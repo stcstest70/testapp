@@ -206,7 +206,7 @@ const Courses = () => {
                 <th>Add Lecture</th>
               </tr>
             </thead>
-            {loading ? 'Loading' : <tbody>
+            {data ? (<tbody>
               {data.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
@@ -259,7 +259,11 @@ const Courses = () => {
                   </td>
                 </tr>
               ))}
-            </tbody>}
+            </tbody>) : (<tbody>
+                <tr>
+                  <td colSpan="6">Loading...</td>
+                </tr>
+              </tbody>)}
 
 
           </table>

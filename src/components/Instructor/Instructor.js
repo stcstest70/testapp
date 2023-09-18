@@ -11,20 +11,18 @@ const Instructor = () => {
   const [loading, setLoading] = useState(true);
 
 
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [cpassword, setCpassword] = useState('');
-
 
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await fetch('https://testapp-sz38.onrender.com/getInstructors', {
-          method: 'GET',
+        const name = sessionStorage.getItem('User');
+        const res = await fetch('https://testapp-sz38.onrender.com/getInstructor', {
+          method: 'POST',
           headers: {
-            "Accept": "application/json"
-          }
+            "Content-Type": "application/json"
+          },
+          body:JSON.stringify({name})
         });
 
         if (!res.ok) {
@@ -41,28 +39,11 @@ const Instructor = () => {
     getData();
   }, []);
 
-  const [data2, setData2] = useState();
-  const getFormData = async () => {
-    try {
-      const res = await fetch('https://testapp-sz38.onrender.com/getCourses', {
-        method: 'GET',
-        headers: {
-          "Accept": "application/json"
-        }
-      });
-      const data = await res.json();
-      setData2(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  
 
 
 
 
-  useEffect(() => {
-    getFormData();
-  }, []);
 
 
   return (
@@ -84,33 +65,28 @@ const Instructor = () => {
               </tr>
             </thead>
 
-            {data2 ? (
+            {data? (
               <tbody>
-                {data.map((item, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{item.name.name}</td>
-                    <td> {item.assign.map((assignment, assignmentIndex) => (
-                      <div key={assignmentIndex}>
-                        {assignment.course}
-                      </div>
-                    ))}</td>
-                    <td> {item.assign.map((assignment, assignmentIndex) => (
-                      <div key={assignmentIndex}>
-                        {assignment.lecture}
-                      </div>
-                    ))}</td>
-                    <td> {item.assign.map((assignment, assignmentIndex) => (
-                      <div key={assignmentIndex}>
-                        {assignment.date}
-                      </div>
-                    ))}</td>
-                    
-
-
-                  </tr>
-                ))}
-              </tbody>
+              <tr>
+                <td>1</td>
+                <td>{data.name.name}</td>
+                <td>
+                  {data.assign.map((assignment, assignmentIndex) => (
+                    <div key={assignmentIndex}>{assignment.course}</div>
+                  ))}
+                </td>
+                <td>
+                  {data.assign.map((assignment, assignmentIndex) => (
+                    <div key={assignmentIndex}>{assignment.lecture}</div>
+                  ))}
+                </td>
+                <td>
+                  {data.assign.map((assignment, assignmentIndex) => (
+                    <div key={assignmentIndex}>{assignment.date}</div>
+                  ))}
+                </td>
+              </tr>
+            </tbody>
             ) : (
               <tbody>
                 <tr>
