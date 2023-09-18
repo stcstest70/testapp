@@ -145,6 +145,30 @@ const Courses = () => {
       console.error('Error:', error);
     }
   };
+  
+  useEffect(() => {
+    const getInitialData = async () => {
+      try {
+        const res = await fetch('https://testapp-sz38.onrender.com/getCourses', {
+          method: 'GET',
+          headers: {
+            "Accept": "application/json"
+          }
+        });
+  
+        if (!res.ok) {
+          throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
+        }
+  
+        const data = await res.json();
+        setData(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    getInitialData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -176,10 +200,7 @@ const Courses = () => {
   };
 
 
-  useEffect(() => {
-
-    getData();
-  }, []);
+  
 
 
   const [cname, setCname] = useState('');

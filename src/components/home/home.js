@@ -73,6 +73,30 @@ const Home = () => {
       console.error('Error:', error);
     }
   };
+  
+  useEffect(() => {
+    const getInitialData = async () => {
+      try {
+        const res = await fetch('https://testapp-sz38.onrender.com/getInstructors', {
+          method: 'GET',
+          headers: {
+            "Accept": "application/json"
+          }
+        });
+  
+        if (!res.ok) {
+          throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
+        }
+  
+        const data = await res.json();
+        setData(data);
+        
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    getInitialData();
+  }, []);
 
   const handleSubmit = async () => {
 
@@ -108,9 +132,7 @@ const Home = () => {
       }
     }
   }
-  useEffect(() => {
-    getData();
-  }, []);
+ 
 
   const [data2, setData2] = useState();
   const getFormData = async () => {
