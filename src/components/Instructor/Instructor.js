@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useContext, useLayoutEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../home/home.css';
-import { Button } from 'react-bootstrap';
-import { Modal } from 'react-bootstrap';
-import { AdminContext } from '../../App.js'
+
 
 const Instructor = () => {
   

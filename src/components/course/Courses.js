@@ -128,10 +128,11 @@ const Courses = () => {
   const getData = async () => {
     try {
       const res = await fetch('https://testapp-sz38.onrender.com/getCourses', {
-        method: 'GET',
+        method: 'POST',
         headers: {
-          "Accept": "application/json"
-        }
+          'Content-Type': 'application/json', // Set the content type to JSON
+        },
+        body: JSON.stringify({}),
       });
 
       if (!res.ok) {
@@ -145,29 +146,10 @@ const Courses = () => {
       console.error('Error:', error);
     }
   };
-  
+
   useEffect(() => {
-    const getInitialData = async () => {
-      try {
-        const res = await fetch('https://testapp-sz38.onrender.com/getCourses', {
-          method: 'GET',
-          headers: {
-            "Accept": "application/json"
-          }
-        });
-  
-        if (!res.ok) {
-          throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
-        }
-  
-        const data = await res.json();
-        setData(data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-    getInitialData();
+    
+    getData();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -180,7 +162,7 @@ const Courses = () => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          name:formData.name,level: formData.level, description:formData.description, image:image
+          name: formData.name, level: formData.level, description: formData.description, image: image
         })
       });
 
@@ -200,7 +182,7 @@ const Courses = () => {
   };
 
 
-  
+
 
 
   const [cname, setCname] = useState('');
@@ -266,7 +248,7 @@ const Courses = () => {
             onChange={handleInputChange}
             placeholder='Description...'
           ></textarea><br />
-          <input type="file" name="image" onChange={handleFileInputChange} />   
+          <input type="file" name="image" onChange={handleFileInputChange} />
           <div className='uploadProgress'><Button variant="primary" onClick={handleImageUpload}>Upload Image</Button> Upload Progress: {uploadProgress.toFixed(2)}%</div>
           <div className="btns">
             <Button variant="secondary" onClick={handleClose}>
@@ -300,8 +282,8 @@ const Courses = () => {
                   <td>{item.name.level}</td>
                   <td>{item.name.description}</td>
                   <td>
-                  <a href={item.name.imageUrl} rel="noreferrer" target="_blank">image url</a>
-                    
+                    <a href={item.name.imageUrl} rel="noreferrer" target="_blank">image url</a>
+
                   </td>
                   <td>
                     <ul>

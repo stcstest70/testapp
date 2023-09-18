@@ -56,10 +56,11 @@ const Home = () => {
   const getData = async () => {
     try {
       const res = await fetch('https://testapp-sz38.onrender.com/getInstructors', {
-        method: 'GET',
+        method: 'POST',
         headers: {
-          "Accept": "application/json"
-        }
+          'Content-Type': 'application/json', // Set the content type to JSON
+        },
+        body: JSON.stringify({}),
       });
 
       if (!res.ok) {
@@ -75,27 +76,8 @@ const Home = () => {
   };
   
   useEffect(() => {
-    const getInitialData = async () => {
-      try {
-        const res = await fetch('https://testapp-sz38.onrender.com/getInstructors', {
-          method: 'GET',
-          headers: {
-            "Accept": "application/json"
-          }
-        });
-  
-        if (!res.ok) {
-          throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
-        }
-  
-        const data = await res.json();
-        setData(data);
-        
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-    getInitialData();
+    
+    getData();
   }, []);
 
   const handleSubmit = async () => {
@@ -138,10 +120,11 @@ const Home = () => {
   const getFormData = async () => {
     try {
       const res = await fetch('https://testapp-sz38.onrender.com/getCourses', {
-        method: 'GET',
+        method: 'POST',
         headers: {
-          "Accept": "application/json"
-        }
+          'Content-Type': 'application/json', // Set the content type to JSON
+        },
+        body: JSON.stringify({}),
       });
       const data = await res.json();
       setData2(data);
