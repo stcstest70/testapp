@@ -171,11 +171,6 @@ const Home = () => {
     setSelectedLecture(selectedOptionValue);
 
   };
-  // useEffect(() => {
-  //   // This effect runs whenever data2 changes.
-  //   console.log(data2);
-
-  // }, [data2]);
 
   const handleCourseChange = (event) => {
     const courseName = event.target.value;
@@ -248,7 +243,7 @@ const Home = () => {
               </tr>
             </thead>
 
-            {data2 ? (
+            {data && data2 ? (
               <tbody>
                 {data.map((item, index) => (
                   <tr key={index}>
